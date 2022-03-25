@@ -41,35 +41,37 @@ class Controller {
             data.complete
         ];
 
-        // let petId = data.petId;
+        let petId = data.petId;
 
-        // if (petId == null) {
-        //     res.status(400).json({ message: "petId is required" })
-        //     return
-        // }
+        if (petId == null) {
+            res.status(400).json({ message: "petId is required" })
+            return
+        }
 
-        // db.query(Store.findId(), (err, result) => {
+        db.query(Store.findId(), (err, result) => {
 
-        //     if (err) throw err;
+            if (err) throw err;
 
-        //     let newR = JSON.stringify(result)
-        //     console.log(newR)
+            let newR = JSON.stringify(result)
+            console.log(newR)
 
-        //     for (let i = 0; i < newR.length; i++) {
+            for (let i = 0; i < newR.length; i++) {
 
-        //         for (let j = 0; j < newR[i].length; j++) {
+                for (let j = 0; j < newR[i].length; j++) {
 
-        //             console.log(newR[i])
+                    console.log(newR[i])
 
-        //             if (newR[i] == petId) {
-        //                 console.log("petId exists")
-        //                 res.status(400).json({ message: "petId already exists" })
-        //                 break;
-        //             }
-        //         }
-        //     }
+                    if (newR[i] == petId) {
+                        console.log("petId exists")
+                        res.status(400).send({ message: "petId already exists" })
+                        return;
+                    }
+                    // break;
+                }
+                // break;
+            }
 
-        // })
+        })
 
         db.query(Store.addStore(), dataStore, (err) => {
 
