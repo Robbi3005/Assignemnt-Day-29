@@ -33,7 +33,8 @@ class Controller {
 
         const data = req.body;
 
-        const dataStore = [
+        let dataStore = [
+            data.id,
             data.petId,
             data.quantity,
             data.shipDate,
@@ -41,43 +42,45 @@ class Controller {
             data.complete
         ];
 
-        let petId = data.petId;
+        let id = data.id;
 
-        if (petId == null) {
+        if (id == null) {
             res.status(400).json({ message: "petId is required" })
             return
         }
 
         db.query(Store.findId(), (err, result) => {
 
-            if (err) throw err;
+            if (err) {
+                res.status(400).send({ message: "petId already exists" })
+            }
 
-            let newR = JSON.stringify(result)
-            console.log(newR)
+            let newR = JSON.stringify(result);
+            // console.log(newR)
 
-            for (let i = 0; i < newR.length; i++) {
+            for (let i = 0; i <= newR.length; i++) {
 
-                for (let j = 0; j < newR[i].length; j++) {
+                for (let j = 0; j < newR[i]; j++) {
 
-                    console.log(newR[i])
+                    // console.log(newR[i])
 
-                    if (newR[i] == petId) {
+                    if (newR[i] == id) {
                         console.log("petId exists")
                         res.status(400).send({ message: "petId already exists" })
                         return;
                     }
-                    // break;
+                    break;
                 }
-                // break;
             }
-
         })
 
         db.query(Store.addStore(), dataStore, (err) => {
 
-            if (err) throw err;
+            if (err) {
+                res.status(400).json(err);
+            }
 
-            res.status(201).json(req.body)
+            res.status(201).send(req.body)
             console.log("adding new store");
         })
     }
@@ -86,7 +89,7 @@ class Controller {
 
         const data = req.body;
 
-        const dataStore = [          
+        const dataStore = [
             data.petId,
             data.quantity,
             data.shipDate,

@@ -10,16 +10,16 @@ class Store {
         return sql
     }
 
-    static findId() {
-        let sql = `SELECT petId FROM store WHERE petId >= 0`;
-        return sql;
-    }
-
     static addStore() {
         let sql = `INSERT INTO store 
-        (petId, quantity, shipDate, status, complete) 
-        VALUES (?, ?, ?, ?, ?)`;
+        (id, petId, quantity, shipDate, status, complete) 
+        VALUES (?, ?, ?, ?, ?, ?)`;
         return sql
+    }
+    
+    static findId() {
+        let sql = `SELECT id FROM store WHERE id >= 0`;
+        return sql;
     }
 
     static updateStore() {
