@@ -50,9 +50,9 @@ class Controller {
 
         const existId = Store.findId(id);
 
-        if (existId != "") {
-            return res.status(400).json({ message: "id already exist" })
-        }
+        // if (existId != "") {
+        //     return res.status(400).json({ message: "id already exist" })
+        // }
 
         db.query(Store.addStore(), dataStore, (err) => {
 
