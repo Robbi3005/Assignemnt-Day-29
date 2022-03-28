@@ -44,35 +44,15 @@ class Controller {
 
         let id = data.id;
 
-        if (id == null) {
-            res.status(400).json({ message: "petId is required" })
-            return
+        if (!id) {
+            return res.status(400).json({ message: "petId is required" })           
         }
 
-        db.query(Store.findId(), (err, result) => {
+        const existId = Store.findId(id);
 
-            if (err) {
-                res.status(400).send({ message: "petId already exists" })
-            }
-
-            let newR = JSON.stringify(result);
-            // console.log(newR)
-
-            for (let i = 0; i <= newR.length; i++) {
-
-                for (let j = 0; j < newR[i]; j++) {
-
-                    // console.log(newR[i])
-
-                    if (newR[i] == id) {
-                        console.log("petId exists")
-                        res.status(400).send({ message: "petId already exists" })
-                        return;
-                    }
-                    break;
-                }
-            }
-        })
+        if (existId != "") {
+            return res.status(400).json({ message: "id already exist" })
+        }
 
         db.query(Store.addStore(), dataStore, (err) => {
 

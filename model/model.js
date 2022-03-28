@@ -17,8 +17,8 @@ class Store {
         return sql
     }
     
-    static findId() {
-        let sql = `SELECT id FROM store WHERE id >= 0`;
+    static findId(id) {
+        let sql = `SELECT id FROM store WHERE id = ${id}`;
         return sql;
     }
 
